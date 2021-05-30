@@ -1,12 +1,14 @@
 // Constants
 const MOVE_SPEED = 200
-const INVADER_SPEED = 80
+const INVADER_BASE_SPEED = 80
 const TIME_LEFT = 50
-const LEVEL_DOWN = 80
+const LEVEL_DOWN = 100
 const BULLET_SPEED = 300
 const MAX_BULLETS = 2
+const DIFF_INC = 5
+
 //Global Variables
-let CURRENT_INV_SPEED = INVADER_SPEED
+let CURRENT_INV_SPEED = INVADER_BASE_SPEED
 let CURR_BULLETS = 0
 let min_detect = 0.1
 let last_detect = 0
@@ -155,6 +157,11 @@ action('bullet', (b) => {
 
 collides('bullet', 'space-invader', (b, s) => {
   camShake(4)
+  if (CURRENT_INV_SPEED > 0){
+    CURRENT_INV_SPEED += DIFF_INC
+  } else {
+    CURRENT_INV_SPEED -= DIFF_INC
+  }
   score.value++
   destroy(b)
   CURR_BULLETS--
